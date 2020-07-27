@@ -11,7 +11,7 @@ namespace VVFS.Compiler {
             { "test", 't', 0, OptionArg.NONE, null, "Execute built in test function." },
             { null }
         };
-        
+
         public Application () {
             Object (
                 application_id: "com.github.lxmcf.vvfs-compiler",
@@ -21,9 +21,9 @@ namespace VVFS.Compiler {
 
         public override int command_line (ApplicationCommandLine command_line) {
             this.hold ();
-    
+
             int result = handle_command_line (command_line);
-    
+
             this.release ();
             return result;
         }
