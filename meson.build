@@ -18,6 +18,4 @@ base_dependencies = [
     dependency ('sdl2')
 ]
 
-# subdir ('src')
 subdir ('lib')
-subdir ('tests')
