@@ -1,5 +1,0 @@
-[options]
-tests = true
-
-[properties]
-
