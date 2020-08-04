@@ -2,41 +2,43 @@ using SDL;
 
 namespace VVFS {
     public class File {
-        public string filename;
+        private string _filename;
+        private Bytes? _bytes;
+        private RWops? _rwops;
+        private int _size;
 
-        private Bytes? bytes;
-        private RWops? rwops;
-
-        public int size;
+        // Read only properties
+        public string filename { get { return _filename; } }
+        public int size { get { return _size; } }
 
         public File (string file) {
-            filename = file;
+            _filename = file;
 
-            if (Utility.file_exists (filename)) {
-                rwops = new RWops.from_file (filename, "rb");
+            if (Utility.file_exists (_filename)) {
+                _rwops = new RWops.from_file (_filename, "rb");
 
                 uint8[] data_array = new uint8[1];
 
-                for (int i = 0; i < rwops.size; i++) {
-                    data_array += rwops.read_u8 ();
+                for (int i = 0; i < _rwops.size; i++) {
+                    data_array += _rwops.read_u8 ();
                 }
 
-                bytes = new Bytes (data_array);
-                size = data_array.length;
+                _bytes = new Bytes (data_array);
+                _size = data_array.length;
             } else {
                 nullify ();
             }
         }
 
         public File.from_gresource (string file) {
-            filename = file;
+            _filename = file;
 
             try {
-                bytes = resources_lookup_data (filename, ResourceLookupFlags.NONE);
+                _bytes = resources_lookup_data (_filename, ResourceLookupFlags.NONE);
 
-                rwops = new RWops.from_mem (bytes.get_data (), bytes.length);
+                _rwops = new RWops.from_mem (_bytes.get_data (), _bytes.length);
 
-                size = bytes.length;
+                _size = _bytes.length;
             } catch (Error e) {
                 warning (e.message);
 
@@ -44,27 +46,23 @@ namespace VVFS {
             }
         }
 
-        public unowned Bytes? get_bytes () {
-            return bytes;
+        public uint8[]? get_data () {
+            return (_bytes == null) ? null : _bytes.get_data ();
         }
 
         public unowned RWops? get_rwops () {
-            return rwops;
+            return _rwops;
         }
 
-        public uint8[]? get_data () {
-            return (bytes == null) ? null : bytes.get_data ();
-        }
-
-        public int get_size () {
-            return size;
+        public unowned Bytes? get_bytes () {
+            return _bytes;
         }
 
         private void nullify () {
-            size = 0;
+            _size = 0;
 
-            bytes = null;
-            rwops = null;
+            _bytes = null;
+            _rwops = null;
         }
     }
 }

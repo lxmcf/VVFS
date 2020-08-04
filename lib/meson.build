@@ -1,6 +1,7 @@
 libvvfs_sources = files (
     'File.vala',
-    'Utility.vala'
+    'Utility.vala',
+    'FileType.vala'
 )
 
 libvvs = library (

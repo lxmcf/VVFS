@@ -1,0 +1,11 @@
+prefix=/usr/local
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: vvfs
+Description: A basic virtual file system and Gresource to SDL2 RWOPS bridge
+URL: https://github.com/lxmcf/vvfs
+Version: 0.1.1
+Requires: glib-2.0, gio-2.0, sdl2
+Libs: -L${libdir} -lvvfs
+Cflags: -I${includedir}/vvfs

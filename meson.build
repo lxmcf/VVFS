@@ -1,4 +1,4 @@
-project ('vvfs', ['vala', 'c'], version: '1.0.0')
+project ('vvfs', ['vala', 'c'], version: '0.1.1')
 
 # Variables
 source_dir = meson.current_source_dir ()
@@ -18,4 +18,10 @@ base_dependencies = [
     dependency ('sdl2')
 ]
 
+tests_enabled = get_option ('tests')
+
 subdir ('lib')
+
+if tests_enabled
+    subdir ('tests')
+endif

@@ -21,5 +21,12 @@ namespace VVFS {
 
             return exists;
         }
+
+        public FileType get_file_type (string file) {
+            if (resource_exists (file)) {return FileType.GRESOURCE; }
+            if (file_exists (file)) {return FileType.PHYSICAL_MEDIA; }
+
+            return FileType.UNKNOWN;
+        }
     }
 }
